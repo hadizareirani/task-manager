@@ -14,40 +14,81 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  username   String   @unique
-  email      String   @unique
-  name       String
-  password   String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  lists      List[]   @relation(fields: [], references: [])
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  username    String        @unique
+  email       String        @unique
+  name        String
+  password    String
+  isDeleted   Boolean       @default(false)
+  deletedAt   DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  List        List[]
+  ActivityLog ActivityLog[]
 }
 
 model List {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  title      String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  userId     String   @db.ObjectId
-  user       User?    @relation(fields: [userId], references: [id])
-  tasks      Task[]   @relation(fields: [], references: [])
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  userId    String    @db.ObjectId
+  user      User?     @relation(fields: [userId], references: [id])
+  isDeleted Boolean   @default(false)
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Task      Task[]
 }
 
 model Task {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  subject     String
-  description String
-  status      TaskStatus
-  priority    Int
-  created_at  DateTime   @default(now())
-  updated_at  DateTime   @updatedAt
-  listId      String     @db.ObjectId
-  list        List?      @relation(fields: [listId], references: [id])
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  subject      String
+  description  String
+  status       TaskStatus
+  priority     Int
+  listId       String        @db.ObjectId
+  list         List?         @relation(fields: [listId], references: [id])
+  parentTaskId String?       @db.ObjectId
+  parentTask   Task?         @relation("TaskParent", fields: [parentTaskId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  subtasks     Task[]        @relation("TaskParent")
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  Tag          Tag[]
+  ActivityLog  ActivityLog[]
 }
 
 enum TaskStatus {
   PENDING
   IN_PROGRESS
   DONE
+}
+
+model Tag {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String    @unique
+  color     String
+  isDeleted Boolean   @default(false)
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Task      Task?     @relation(fields: [taskId], references: [id])
+  taskId    String?   @db.ObjectId
+}
+
+model ActivityLog {
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
+  taskId    String       @db.ObjectId
+  task      Task?        @relation(fields: [taskId], references: [id])
+  userId    String       @db.ObjectId
+  user      User?        @relation(fields: [userId], references: [id])
+  action    ActivityType
+  createdAt DateTime     @default(now())
+}
+
+enum ActivityType {
+  CREATED
+  UPDATED
+  MOVED
+  COMPLETED
+  DELETED
+  REOPENED
 }
