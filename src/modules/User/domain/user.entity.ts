@@ -4,14 +4,10 @@ export class User {
     public username: string,
     public email: string,
     public name: string,
-    private _password: string,
+    public password: string,
     public isDeleted: boolean = false,
-    public deletedAt?: Date,
+    public deletedAt?: Date | null,
     public createdAt: Date = new Date(),
     public updatedAt: Date = new Date(),
   ) {}
-
-  get password() {
-    return this._password;
-  }
 }
