@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { User, UserRepository } from '../domain';
+import { UserRepository } from '../domain';
+import { OperationResponse } from 'src/shared/responses/operation-response';
+import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 
 @Injectable()
 export class CreateUserUseCase {
@@ -8,10 +10,12 @@ export class CreateUserUseCase {
   async execute(
     username: string,
     email: string,
-    name: string,
-    password: string,
-  ): Promise<User> {
-    const user = new User('', username, email, name, password);
-    return this.userRepository.create(user);
+    // name: string,
+    // password: string,
+  ) {
+    const user = await this.userRepository.findFirstUser(username, email);
+    if (user) {
+      return OperationResponse.fail(ErrorListEnum.UserAlreadyExists);
+    }
   }
 }
