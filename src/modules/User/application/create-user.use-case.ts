@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { UserRepository } from '../domain';
+import { User, UserRepository } from '../domain';
 import { OperationResponse } from 'src/shared/responses/operation-response';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 import { Email } from 'src/shared/domain/value-objects/email.vo';
+import { Password } from 'src/shared/domain/value-objects/password.vo';
 
 @Injectable()
 export class CreateUserUseCase {
@@ -11,10 +12,10 @@ export class CreateUserUseCase {
   async execute(
     username: string,
     email: string,
-    // name: string,
-    // password: string,
+    name: string,
+    password: string,
   ) {
-    const user = await this.userRepository.findFirstUser(username, email);
+    let user = await this.userRepository.findFirstUser(username, email);
     if (user) {
       return OperationResponse.fail(ErrorListEnum.UserAlreadyExists);
     }
@@ -22,5 +23,14 @@ export class CreateUserUseCase {
     if (!Email.isValid(email)) {
       return OperationResponse.fail(ErrorListEnum.EmailIsNotValid);
     }
+    const hashedPassword = await new Password(
+      password,
+      username,
+    ).hashPassword();
+
+    user = new User('', username, email, name, hashedPassword, false, null);
+
+    const userId = (await this.userRepository.create(user)).id;
+    return OperationResponse.success(userId);
   }
 }
