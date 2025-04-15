@@ -31,6 +31,6 @@ export class CreateUserUseCase {
     user = new User('', username, email, name, hashedPassword, false, null);
 
     const userId = (await this.userRepository.create(user)).id;
-    return OperationResponse.success(userId);
+    return OperationResponse.success<string>(userId);
   }
 }

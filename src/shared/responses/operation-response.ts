@@ -14,9 +14,9 @@ export class OperationResponse<TValue> {
     return new OperationResponse(value);
   }
 
-  static fail<T>(error: ErrorListEnum): OperationResponse<T> {
+  static fail(error: ErrorListEnum): OperationResponse<null> {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    return new OperationResponse<T>(null as any, error);
+    return new OperationResponse<null>(null as any, error);
   }
 
   getValue(): TValue | undefined {
