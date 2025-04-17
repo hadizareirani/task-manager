@@ -23,10 +23,7 @@ export class CreateUserUseCase {
     if (!Email.isValid(email)) {
       return OperationResponse.fail(ErrorListEnum.EmailIsNotValid);
     }
-    const hashedPassword = await new Password(
-      password,
-      username,
-    ).hashPassword();
+    const hashedPassword = await new Password(password).hashPassword();
 
     user = new User('', username, email, name, hashedPassword, false, null);
 

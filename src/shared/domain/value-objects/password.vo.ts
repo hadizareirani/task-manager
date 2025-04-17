@@ -1,13 +1,13 @@
 import * as bcrypt from 'bcrypt';
 
 export class Password {
-  constructor(
-    private readonly password: string,
-    private readonly username: string,
-  ) {}
+  constructor(private readonly password: string) {}
   async hashPassword() {
     const saltOrRounds = 10;
-    return await bcrypt.hash(`${this.password}-${this.username}`, saltOrRounds);
+    return await bcrypt.hash(
+      `${this.password}-${process.env.PASSWORD_HASH}`,
+      saltOrRounds,
+    );
   }
 
   static async isValid(password: string, username: string, hash: string) {
