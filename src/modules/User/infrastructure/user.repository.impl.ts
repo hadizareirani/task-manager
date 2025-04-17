@@ -16,6 +16,13 @@ export class UserRepositoryImpl implements UserRepository {
       },
     });
   }
+  async findById(id: string): Promise<User | null> {
+    return await this.connectionService.user.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
   async findFirstUser(username: string, email: string): Promise<User | null> {
     return await this.connectionService.user.findFirst({
       where: {
