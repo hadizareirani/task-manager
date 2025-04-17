@@ -1,3 +1,4 @@
+import { AuthController } from './interface/controller/auth.controller';
 /*
 https://docs.nestjs.com/modules
 */
@@ -13,7 +14,7 @@ import { JwtModule } from '@nestjs/jwt';
       signOptions: { expiresIn: '60s' },
     }),
   ],
-  controllers: [],
+  controllers: [AuthController],
   providers: [],
 })
 export class AuthModule {}
