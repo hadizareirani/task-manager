@@ -1,13 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { User, UserRepository } from '../domain';
 import { OperationResponse } from 'src/shared/responses/operation-response';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 import { Email } from 'src/shared/domain/value-objects/email.vo';
 import { Password } from 'src/shared/domain/value-objects/password.vo';
+import { USER_REPOSITORY } from '../constants/user-repository.token';
 
 @Injectable()
 export class CreateUserUseCase {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    @Inject(USER_REPOSITORY) private readonly userRepository: UserRepository,
+  ) {}
 
   async execute(
     username: string,

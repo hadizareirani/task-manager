@@ -24,10 +24,14 @@ export class UserRepositoryImpl implements UserRepository {
     });
   }
   async findFirstUser(username: string, email: string): Promise<User | null> {
-    return await this.connectionService.user.findFirst({
+    const t = await this.connectionService.user.findFirst({
       where: {
         OR: [{ username }, { email }],
       },
     });
+    console.log('====================================');
+    console.log(t);
+    console.log('====================================');
+    return t;
   }
 }
