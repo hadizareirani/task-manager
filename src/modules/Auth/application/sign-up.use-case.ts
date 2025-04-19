@@ -22,8 +22,8 @@ export class SignUpUseCase {
       name,
       password,
     );
-    if (!result.isSucceeded) return result;
-    const token = await this.jwtService.signAsync(result.getValue()!);
+    if (!result.isSucceeded()) return result;
+    const token = await this.jwtService.signAsync({ sub: result.getValue() });
     return OperationResponse.success(token);
   }
 }

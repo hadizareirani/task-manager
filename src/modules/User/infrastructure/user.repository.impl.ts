@@ -1,11 +1,20 @@
+import { Injectable } from '@nestjs/common';
 import { ConnectionService } from 'src/connection/connection.service';
 import { User, UserRepository } from '../domain';
 
+@Injectable()
 export class UserRepositoryImpl implements UserRepository {
   constructor(private connectionService: ConnectionService) {}
   async create(user: User): Promise<User> {
     return await this.connectionService.user.create({
-      data: user,
+      data: {
+        email: user.email,
+        name: user.name,
+        password: user.password,
+        username: user.username,
+        deletedAt: user.deletedAt,
+        isDeleted: user.isDeleted,
+      },
     });
   }
 
@@ -24,14 +33,10 @@ export class UserRepositoryImpl implements UserRepository {
     });
   }
   async findFirstUser(username: string, email: string): Promise<User | null> {
-    const t = await this.connectionService.user.findFirst({
+    return await this.connectionService.user.findFirst({
       where: {
         OR: [{ username }, { email }],
       },
     });
-    console.log('====================================');
-    console.log(t);
-    console.log('====================================');
-    return t;
   }
 }

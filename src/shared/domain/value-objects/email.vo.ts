@@ -2,7 +2,7 @@ export class Email {
   private constructor(private readonly value: string) {}
 
   static isValid(email: string): boolean {
-    return !/^\S+@\S+\.\S+$/.test(email);
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
   getValue(): string {

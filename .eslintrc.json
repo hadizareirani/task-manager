@@ -1,6 +1,7 @@
 {
   "rules": {
     "linebreak-style": ["error", "unix"],
+    "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-unsafe-call": "off"
   }
 }
