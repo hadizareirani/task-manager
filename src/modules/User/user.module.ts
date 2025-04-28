@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
-import { ConnectionService } from 'src/connection/connection.service';
+import { User, UserSchema } from './schemas/user.schema';
 import { UserRepositoryImpl } from './infrastructure/user.repository.impl';
 import { CreateUserUseCase } from './application';
 import { USER_REPOSITORY } from './constants/user-repository.token';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [],
+  imports: [
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+  ],
   controllers: [],
   providers: [
-    ConnectionService,
     CreateUserUseCase,
     {
       provide: USER_REPOSITORY,

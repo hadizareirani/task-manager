@@ -1,7 +1,3 @@
-/*
-https://docs.nestjs.com/controllers#controllers
-*/
-
 import { Body, Controller, Post } from '@nestjs/common';
 import { SignUpDto } from '../dto/sign-up.dto';
 import { SignUpUseCase } from '../../application/sign-up.use-case';
