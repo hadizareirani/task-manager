@@ -34,7 +34,7 @@ export class ResponseModelInterceptor<T>
     console.log('====================================');
     // req.user = await this.jwtService.decode(userToken);
     return next.handle().pipe(
-      map((result) => {
+      map((result: OperationResponse<T>) => {
         console.log('====================================');
         console.log(result);
         console.log('====================================');
@@ -43,7 +43,6 @@ export class ResponseModelInterceptor<T>
             res.status(HttpStatus.OK);
           }
         }
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return result;
       }),
     );

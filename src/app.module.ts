@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-// import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 import { AuthModule } from './modules/Auth/auth.module';
 import { UserModule } from './modules/User/user.module';
-// import { ResponseModelInterceptor } from './shared/interceptors/response-model/response-model.interceptor';
+import { ResponseModelInterceptor } from './shared/interceptors/response-model/response-model.interceptor';
 
 @Module({
   imports: [
@@ -23,11 +23,11 @@ import { UserModule } from './modules/User/user.module';
     UserModule,
   ],
   controllers: [],
-  // providers: [
-  //   {
-  //     provide: APP_INTERCEPTOR,
-  //     useClass: ResponseModelInterceptor,
-  //   },
-  // ],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseModelInterceptor,
+    },
+  ],
 })
 export class AppModule {}
