@@ -21,7 +21,6 @@ export class ResponseModelInterceptor<T>
 {
   constructor(private readonly jwtService: JwtService) {}
 
-  // eslint-disable-next-line @typescript-eslint/require-await
   async intercept(
     context: ExecutionContext,
     next: CallHandler,
@@ -29,15 +28,11 @@ export class ResponseModelInterceptor<T>
     const req = context.switchToHttp().getRequest<RequestWithUser>();
     const res = context.switchToHttp().getResponse<Response>();
     const userToken = req?.headers?.authorization?.split(' ')[1];
-    console.log('====================================');
-    console.log(userToken);
-    console.log('====================================');
-    // req.user = await this.jwtService.decode(userToken);
+    if (userToken) {
+      req.user = await this.jwtService.decode(userToken);
+    }
     return next.handle().pipe(
       map((result: OperationResponse<T>) => {
-        console.log('====================================');
-        console.log(result);
-        console.log('====================================');
         if (req.method === 'POST') {
           if (res.statusCode === 201) {
             res.status(HttpStatus.OK);
