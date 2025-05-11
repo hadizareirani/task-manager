@@ -1,15 +1,16 @@
 import { Module } from '@nestjs/common';
-// import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+// import { APP_INTERCEPTOR } from '@nestjs/core';
+
 import { AuthModule } from './modules/Auth/auth.module';
 import { UserModule } from './modules/User/user.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 // import { ResponseModelInterceptor } from './shared/interceptors/response-model/response-model.interceptor';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // Make config available everywhere
+      isGlobal: true,
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],

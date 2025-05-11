@@ -8,14 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
   imports: [
     UserModule,
-    // JwtModule.register({
-    //   global: true,
-    //   secret: process.env.JWT_SECRET,
-    //   signOptions: { expiresIn: '60s' },
-    // }),
-
     ConfigModule.forRoot({ isGlobal: true }),
-
     JwtModule.registerAsync({
       imports: [ConfigModule],
       global: true,
