@@ -18,19 +18,27 @@ export class CreateUserUseCase {
     name: string,
     password: string,
   ) {
-    let user = await this.userRepository.findFirstUser(username, email);
-    if (user) {
-      return OperationResponse.fail(ErrorListEnum.UserAlreadyExists);
-    }
+    // let user = await this.userRepository.findFirstUser(username, email);
+    // if (user) {
+    //   return OperationResponse.fail(ErrorListEnum.UserAlreadyExists);
+    // }
 
-    if (!Email.isValid(email)) {
-      return OperationResponse.fail(ErrorListEnum.EmailIsNotValid);
-    }
-    const hashedPassword = await new Password(password).hashPassword();
+    // if (!Email.isValid(email)) {
+    //   return OperationResponse.fail(ErrorListEnum.EmailIsNotValid);
+    // }
+    // const hashedPassword = await Password.create(password, username);
+    // user = new User(
+    //   '',
+    //   username,
+    //   Email.create(email),
+    //   name,
+    //   hashedPassword,
+    //   false,
+    //   null,
+    // );
 
-    user = new User('', username, email, name, hashedPassword, false, null);
-
-    const userId = (await this.userRepository.create(user)).id;
-    return OperationResponse.success<string>(userId);
+    // const userId = (await this.userRepository.create(user)).id;
+    // return OperationResponse.success<string>(userId);
+    return { username, email, name, password };
   }
 }

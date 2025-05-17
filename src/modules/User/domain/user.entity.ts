@@ -1,11 +1,13 @@
 import { Email } from 'src/shared/domain/value-objects/email.vo';
+import { Password } from 'src/shared/domain/value-objects/password.vo';
+import { Username } from './value-object/username.vo';
 
 export class User {
   private readonly _id: string;
-  private _username: string;
+  private _username: Username;
   private _email: Email;
   private _name: string;
-  private _password: string;
+  private _password: Password;
   private _isDeleted: boolean;
   private _deletedAt: Date | null;
   private readonly _createdAt: Date;
@@ -13,10 +15,10 @@ export class User {
 
   constructor(
     id: string,
-    username: string,
+    username: Username,
     email: Email,
     name: string,
-    password: string,
+    password: Password,
     isDeleted = false,
     deletedAt: Date | null = null,
     createdAt = new Date(),
@@ -38,7 +40,7 @@ export class User {
   }
 
   get username(): string {
-    return this._username;
+    return this._username.value;
   }
 
   get email(): string {
@@ -50,7 +52,7 @@ export class User {
   }
 
   get password(): string {
-    return this._password;
+    return this._password.value;
   }
 
   get isDeleted(): boolean {
