@@ -5,6 +5,7 @@ import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 import { Email } from 'src/shared/domain/value-objects/email.vo';
 import { Password } from 'src/shared/domain/value-objects/password.vo';
 import { USER_REPOSITORY } from '../constants/user-repository.token';
+import { Username } from '../domain/value-object/username.vo';
 
 @Injectable()
 export class CreateUserUseCase {
@@ -18,10 +19,13 @@ export class CreateUserUseCase {
     name: string,
     password: string,
   ) {
-    // let user = await this.userRepository.findFirstUser(username, email);
-    // if (user) {
-    //   return OperationResponse.fail(ErrorListEnum.UserAlreadyExists);
-    // }
+    const validUsername = Username.create(username);
+    if (!validUsername)
+      return OperationResponse.fail(ErrorListEnum.UsernameIsWrong);
+    let user = await this.userRepository.findFirstUser(validUsername, email);
+    if (user) {
+      return OperationResponse.fail(ErrorListEnum.UserAlreadyExists);
+    }
 
     // if (!Email.isValid(email)) {
     //   return OperationResponse.fail(ErrorListEnum.EmailIsNotValid);
