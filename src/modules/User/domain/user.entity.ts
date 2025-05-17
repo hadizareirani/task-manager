@@ -1,7 +1,9 @@
+import { Email } from 'src/shared/domain/value-objects/email.vo';
+
 export class User {
   private readonly _id: string;
   private _username: string;
-  private _email: string;
+  private _email: Email;
   private _name: string;
   private _password: string;
   private _isDeleted: boolean;
@@ -12,7 +14,7 @@ export class User {
   constructor(
     id: string,
     username: string,
-    email: string,
+    email: Email,
     name: string,
     password: string,
     isDeleted = false,
@@ -40,7 +42,7 @@ export class User {
   }
 
   get email(): string {
-    return this._email;
+    return this._email.value;
   }
 
   get name(): string {
