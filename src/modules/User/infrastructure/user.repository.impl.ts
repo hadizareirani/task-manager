@@ -3,6 +3,8 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { User as UserEntity, UserRepository } from '../domain';
 import { User, UserDocument } from '../schemas/user.schema';
+import { Username } from '../domain/value-object/username.vo';
+import { Email } from 'src/shared/domain/value-objects/email.vo';
 
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {
@@ -58,23 +60,23 @@ export class UserRepositoryImpl implements UserRepository {
     );
   }
   async findFirstUser(
-    username: string,
-    email: string,
+    username: Username,
+    email: Email,
   ): Promise<UserEntity | null> {
     const userDoc = await this.userModel.findOne({
-      $or: [{ username }, { email }],
+      $or: [{ username: username.value }, { email: email.value }],
     });
     if (!userDoc) return null;
-    return new UserEntity(
-      userDoc._id.toString(),
-      userDoc.username,
-      userDoc.email,
-      userDoc.name,
-      userDoc.password,
-      userDoc.isDeleted,
-      userDoc.deletedAt,
-      userDoc.createdAt,
-      userDoc.updatedAt,
-    );
+    return UserEntity.create({
+      id: userDoc._id.toString(),
+      username: Username.create(userDoc.username),
+      email: userDoc.email,
+      name: userDoc.name,
+      password: userDoc.password,
+      isDeleted: userDoc.isDeleted,
+      deletedAt: userDoc.deletedAt,
+      createdAt: userDoc.createdAt,
+      updatedAt: userDoc.updatedAt,
+    });
   }
 }
