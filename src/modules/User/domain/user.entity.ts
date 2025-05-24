@@ -13,7 +13,7 @@ export class User {
   private readonly _createdAt: Date;
   private _updatedAt: Date;
 
-  constructor(
+  private constructor(
     id: string,
     username: Username,
     email: Email,
@@ -33,6 +33,30 @@ export class User {
     this._deletedAt = deletedAt;
     this._createdAt = createdAt;
     this._updatedAt = updatedAt;
+  }
+
+  static create(props: {
+    id: string;
+    username: Username;
+    email: Email;
+    name: string;
+    password: Password;
+    createdAt?: Date;
+    updatedAt?: Date;
+    isDeleted?: boolean;
+    deletedAt?: Date | null;
+  }): User {
+    return new User(
+      props.id,
+      props.username,
+      props.email,
+      props.name,
+      props.password,
+      props.isDeleted ?? false,
+      props.deletedAt ?? null,
+      props.createdAt ?? new Date(),
+      props.updatedAt ?? new Date(),
+    );
   }
 
   get id(): string {
@@ -69,6 +93,11 @@ export class User {
 
   get updatedAt(): Date {
     return this._updatedAt;
+  }
+
+  updateName(newName: string): void {
+    this._name = newName;
+    this.touch();
   }
 
   private touch(): void {

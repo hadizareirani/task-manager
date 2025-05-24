@@ -1,3 +1,6 @@
+import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
+import { OperationResponse } from 'src/shared/responses/operation-response';
+
 export class Username {
   constructor(private readonly _value: string) {}
 
@@ -6,7 +9,9 @@ export class Username {
   }
 
   static create(username: string) {
-    if (!username || username === '' || username.length < 5) return false;
+    if (!username || username === '' || username.length < 5) {
+      return OperationResponse.fail(ErrorListEnum.UsernameIsWrong);
+    }
     return new Username(username);
   }
 }

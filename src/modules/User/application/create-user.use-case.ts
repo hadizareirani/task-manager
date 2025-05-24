@@ -19,13 +19,13 @@ export class CreateUserUseCase {
     name: string,
     password: string,
   ) {
-    const validUsername = Username.create(username);
-    if (!validUsername)
-      return OperationResponse.fail(ErrorListEnum.UsernameIsWrong);
-    let user = await this.userRepository.findFirstUser(validUsername, email);
-    if (user) {
-      return OperationResponse.fail(ErrorListEnum.UserAlreadyExists);
-    }
+    // const validUsername = Username.create(username);
+    // if (!validUsername)
+    //   return OperationResponse.fail(ErrorListEnum.UsernameIsWrong);
+    // let user = await this.userRepository.findFirstUser(validUsername, email);
+    // if (user) {
+    //   return OperationResponse.fail(ErrorListEnum.UserAlreadyExists);
+    // }
 
     // if (!Email.isValid(email)) {
     //   return OperationResponse.fail(ErrorListEnum.EmailIsNotValid);

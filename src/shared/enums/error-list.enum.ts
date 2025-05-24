@@ -3,4 +3,6 @@ export enum ErrorListEnum {
   EmailIsNotValid = 2,
   UserNotFound = 3,
   UsernameIsWrong = 4,
+  PasswordIsRequired = 5,
+  PasswordIsWeak = 6,
 }
