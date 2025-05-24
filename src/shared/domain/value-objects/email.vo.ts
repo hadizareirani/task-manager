@@ -11,6 +11,6 @@ export class Email {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return OperationResponse.fail(ErrorListEnum.EmailIsNotValid);
     }
-    return new Email(email);
+    return OperationResponse.success(new Email(email));
   }
 }

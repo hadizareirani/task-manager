@@ -28,6 +28,6 @@ export class Password {
       `${password}-${username.value}-${process.env.PASSWORD_HASH}`,
       saltOrRounds,
     );
-    return new Password(hashPassword);
+    return OperationResponse.success(new Password(hashPassword));
   }
 }

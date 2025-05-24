@@ -12,6 +12,6 @@ export class Username {
     if (!username || username === '' || username.length < 5) {
       return OperationResponse.fail(ErrorListEnum.UsernameIsWrong);
     }
-    return new Username(username);
+    return OperationResponse.success(new Username(username));
   }
 }
