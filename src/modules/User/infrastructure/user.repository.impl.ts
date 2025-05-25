@@ -5,6 +5,7 @@ import { User as UserEntity, UserRepository } from '../domain';
 import { User, UserDocument } from '../schemas/user.schema';
 import { Username } from '../domain/value-object/username.vo';
 import { Email } from 'src/shared/domain/value-objects/email.vo';
+import { UserMapper } from './mappers/user.mapper';
 
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {
@@ -13,52 +14,25 @@ export class UserRepositoryImpl implements UserRepository {
   ) {}
 
   async create(user: UserEntity): Promise<UserEntity> {
-    const createdUser = new this.userModel(user);
+    const createdUser = new this.userModel(UserMapper.toPersistence(user));
     const savedUser = await createdUser.save();
-
-    return new UserEntity(
-      savedUser._id.toString(),
-      savedUser.username,
-      savedUser.email,
-      savedUser.name,
-      savedUser.password,
-      savedUser.isDeleted,
-      savedUser.deletedAt,
-      savedUser.createdAt,
-      savedUser.updatedAt,
-    );
+    return UserMapper.toDomain(savedUser);
   }
 
-  async findByUsername(username: string): Promise<UserEntity | null> {
-    const userDoc = await this.userModel.findOne({ username }).exec();
+  async findByUsername(username: Username): Promise<UserEntity | null> {
+    const userDoc = await this.userModel
+      .findOne({ username: username.value })
+      .exec();
     if (!userDoc) return null;
-    return new UserEntity(
-      userDoc._id.toString(),
-      userDoc.username,
-      userDoc.email,
-      userDoc.name,
-      userDoc.password,
-      userDoc.isDeleted,
-      userDoc.deletedAt,
-      userDoc.createdAt,
-      userDoc.updatedAt,
-    );
+    return UserMapper.toDomain(userDoc);
   }
+
   async findById(id: string): Promise<UserEntity | null> {
     const userDoc = await this.userModel.findById(id).exec();
     if (!userDoc) return null;
-    return new UserEntity(
-      userDoc._id.toString(),
-      userDoc.username,
-      userDoc.email,
-      userDoc.name,
-      userDoc.password,
-      userDoc.isDeleted,
-      userDoc.deletedAt,
-      userDoc.createdAt,
-      userDoc.updatedAt,
-    );
+    return UserMapper.toDomain(userDoc);
   }
+
   async findFirstUser(
     username: Username,
     email: Email,
@@ -67,16 +41,6 @@ export class UserRepositoryImpl implements UserRepository {
       $or: [{ username: username.value }, { email: email.value }],
     });
     if (!userDoc) return null;
-    return UserEntity.create({
-      id: userDoc._id.toString(),
-      username: Username.create(userDoc.username),
-      email: userDoc.email,
-      name: userDoc.name,
-      password: userDoc.password,
-      isDeleted: userDoc.isDeleted,
-      deletedAt: userDoc.deletedAt,
-      createdAt: userDoc.createdAt,
-      updatedAt: userDoc.updatedAt,
-    });
+    return UserMapper.toDomain(userDoc);
   }
 }

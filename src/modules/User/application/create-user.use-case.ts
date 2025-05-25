@@ -6,6 +6,7 @@ import { Email } from 'src/shared/domain/value-objects/email.vo';
 import { Password } from 'src/shared/domain/value-objects/password.vo';
 import { USER_REPOSITORY } from '../constants/user-repository.token';
 import { Username } from '../domain/value-object/username.vo';
+import { UserMapper } from '../infrastructure/mappers/user.mapper';
 
 @Injectable()
 export class CreateUserUseCase {
@@ -22,10 +23,6 @@ export class CreateUserUseCase {
     // const validUsername = Username.create(username);
     // if (!validUsername)
     //   return OperationResponse.fail(ErrorListEnum.UsernameIsWrong);
-    // let user = await this.userRepository.findFirstUser(validUsername, email);
-    // if (user) {
-    //   return OperationResponse.fail(ErrorListEnum.UserAlreadyExists);
-    // }
 
     // if (!Email.isValid(email)) {
     //   return OperationResponse.fail(ErrorListEnum.EmailIsNotValid);
@@ -40,6 +37,23 @@ export class CreateUserUseCase {
     //   false,
     //   null,
     // );
+
+    const user = UserMapper.toDomain({
+      _id: '',
+      username,
+      password,
+      email,
+      name,
+      isDeleted: false,
+      deletedAt: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    // let user = await this.userRepository.findFirstUser(validUsername, email);
+    // if (user) {
+    //   return OperationResponse.fail(ErrorListEnum.UserAlreadyExists);
+    // }
 
     // const userId = (await this.userRepository.create(user)).id;
     // return OperationResponse.success<string>(userId);

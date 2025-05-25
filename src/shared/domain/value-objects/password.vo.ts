@@ -1,5 +1,4 @@
 import * as bcrypt from 'bcrypt';
-import { Username } from 'src/modules/User/domain/value-object/username.vo';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 import { OperationResponse } from 'src/shared/responses/operation-response';
 
@@ -14,7 +13,7 @@ export class Password {
   //   return await bcrypt.compare(`${password}-${username}`, hash);
   // }
 
-  static async create(password: string, username: Username) {
+  static async create(password: string, username: string) {
     if (!password)
       return OperationResponse.fail(ErrorListEnum.PasswordIsRequired);
     const strongPasswordRegex =
@@ -25,7 +24,7 @@ export class Password {
 
     const saltOrRounds = 10;
     const hashPassword = await bcrypt.hash(
-      `${password}-${username.value}-${process.env.PASSWORD_HASH}`,
+      `${password}-${username}-${process.env.PASSWORD_HASH}`,
       saltOrRounds,
     );
     return OperationResponse.success(new Password(hashPassword));
