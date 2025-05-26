@@ -1,17 +1,23 @@
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
-import { OperationResponse } from 'src/shared/core/operation-response';
+import { Result } from 'src/shared/core/result';
 
 export class Username {
-  constructor(private readonly _value: string) {}
+  private constructor(private readonly _value: string) {
+    this.validate(_value);
+  }
+
+  private validate(username: string) {
+    if (!username || username === '' || username.length < 5) {
+      return Result.fail(ErrorListEnum.UsernameIsWrong);
+    }
+    return username;
+  }
 
   get value() {
     return this._value;
   }
 
   static create(username: string) {
-    if (!username || username === '' || username.length < 5) {
-      return OperationResponse.fail(ErrorListEnum.UsernameIsWrong);
-    }
-    return OperationResponse.success(new Username(username));
+    return Result.ok(new Username(username));
   }
 }

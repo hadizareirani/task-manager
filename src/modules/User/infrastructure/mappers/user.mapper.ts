@@ -7,19 +7,19 @@ import { User } from '../../domain';
 export class UserMapper {
   static async toDomain(raw: UserDocument) {
     const username = Username.create(raw.username);
-    if (!username.isSucceeded()) return null;
+    if (username.isFailure) return username.getError();
 
     const email = Email.create(raw.email);
-    if (!email.isSucceeded()) return null;
+    if (email.isFailure) return email.getError();
 
     const password = await Password.create(raw.password, raw.username);
-    if (!password.isSucceeded()) return null;
+    if (password.isFailure) return email.getError();
 
     const user = User.create({
       id: raw._id.toString(),
-      username: username.getValue()!,
-      email: email.getValue()!,
-      password: password.getValue()!,
+      username: username.getValue(),
+      email: email.getValue(),
+      password: password.getValue(),
       name: raw.name,
       isDeleted: raw.isDeleted,
       deletedAt: raw.deletedAt,

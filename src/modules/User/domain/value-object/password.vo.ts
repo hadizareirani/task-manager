@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
-import { OperationResponse } from 'src/shared/core/operation-response';
+import { Result } from 'src/shared/core/result';
 
 export class Password {
   constructor(private readonly _value: string) {}
@@ -14,19 +14,18 @@ export class Password {
   // }
 
   static async create(password: string, username: string) {
-    if (!password)
-      return OperationResponse.fail(ErrorListEnum.PasswordIsRequired);
+    if (!password) return Result.fail(ErrorListEnum.PasswordIsRequired);
     const strongPasswordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+={}[\]:;"'<>,.?/~`\\|]).{8,}$/;
 
     if (!strongPasswordRegex.test(password))
-      return OperationResponse.fail(ErrorListEnum.PasswordIsWeak);
+      return Result.fail(ErrorListEnum.PasswordIsWeak);
 
     const saltOrRounds = 10;
     const hashPassword = await bcrypt.hash(
       `${password}-${username}-${process.env.PASSWORD_HASH}`,
       saltOrRounds,
     );
-    return OperationResponse.success(new Password(hashPassword));
+    return Result.ok(new Password(hashPassword));
   }
 }
