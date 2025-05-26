@@ -1,7 +1,7 @@
-import { Email } from 'src/shared/domain/value-objects/email.vo';
+import { Email } from 'src/modules/User/domain/value-object/email.vo';
 import { Username } from '../../domain/value-object/username.vo';
 import { UserDocument } from '../../schemas/user.schema';
-import { Password } from 'src/shared/domain/value-objects/password.vo';
+import { Password } from 'src/modules/User/domain/value-object/password.vo';
 import { User } from '../../domain';
 
 export class UserMapper {

@@ -8,7 +8,7 @@ import {
 import { map, Observable } from 'rxjs';
 import { JwtService } from '@nestjs/jwt';
 import { Request, Response } from 'express';
-import { OperationResponse } from 'src/shared/responses/operation-response';
+import { OperationResponse } from 'src/shared/core/operation-response';
 interface JwtPayload {
   id: string;
 }

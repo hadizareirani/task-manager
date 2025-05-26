@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserUseCase } from 'src/modules/User';
-import { OperationResponse } from 'src/shared/responses/operation-response';
+import { OperationResponse } from 'src/shared/core/operation-response';
 
 @Injectable()
 export class SignUpUseCase {

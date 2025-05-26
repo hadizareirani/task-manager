@@ -1,4 +1,4 @@
-import { Email } from 'src/shared/domain/value-objects/email.vo';
+import { Email } from 'src/modules/User/domain/value-object/email.vo';
 import { User } from './user.entity';
 import { Username } from './value-object/username.vo';
 

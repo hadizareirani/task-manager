@@ -1,5 +1,5 @@
-import { Email } from 'src/shared/domain/value-objects/email.vo';
-import { Password } from 'src/shared/domain/value-objects/password.vo';
+import { Email } from 'src/modules/User/domain/value-object/email.vo';
+import { Password } from 'src/modules/User/domain/value-object/password.vo';
 import { Username } from './value-object/username.vo';
 
 export class User {

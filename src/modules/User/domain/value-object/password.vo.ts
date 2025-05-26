@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
-import { OperationResponse } from 'src/shared/responses/operation-response';
+import { OperationResponse } from 'src/shared/core/operation-response';
 
 export class Password {
   constructor(private readonly _value: string) {}

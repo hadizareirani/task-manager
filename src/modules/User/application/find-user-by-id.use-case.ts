@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User, UserRepository } from '../domain';
-import { OperationResponse } from 'src/shared/responses/operation-response';
+import { OperationResponse } from 'src/shared/core/operation-response';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 
 @Injectable()

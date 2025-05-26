@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User as UserEntity, UserRepository } from '../domain';
 import { User, UserDocument } from '../schemas/user.schema';
 import { Username } from '../domain/value-object/username.vo';
-import { Email } from 'src/shared/domain/value-objects/email.vo';
+import { Email } from 'src/modules/User/domain/value-object/email.vo';
 import { UserMapper } from './mappers/user.mapper';
 
 @Injectable()

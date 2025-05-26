@@ -1,12 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { User, UserRepository } from '../domain';
-import { OperationResponse } from 'src/shared/responses/operation-response';
-import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
-import { Email } from 'src/shared/domain/value-objects/email.vo';
-import { Password } from 'src/shared/domain/value-objects/password.vo';
+import { UserRepository } from '../domain';
 import { USER_REPOSITORY } from '../constants/user-repository.token';
-import { Username } from '../domain/value-object/username.vo';
-import { UserMapper } from '../infrastructure/mappers/user.mapper';
 
 @Injectable()
 export class CreateUserUseCase {
@@ -14,12 +8,7 @@ export class CreateUserUseCase {
     @Inject(USER_REPOSITORY) private readonly userRepository: UserRepository,
   ) {}
 
-  async execute(
-    username: string,
-    email: string,
-    name: string,
-    password: string,
-  ) {
+  execute(username: string, email: string, name: string, password: string) {
     // const validUsername = Username.create(username);
     // if (!validUsername)
     //   return OperationResponse.fail(ErrorListEnum.UsernameIsWrong);
@@ -38,17 +27,17 @@ export class CreateUserUseCase {
     //   null,
     // );
 
-    const user = UserMapper.toDomain({
-      _id: '',
-      username,
-      password,
-      email,
-      name,
-      isDeleted: false,
-      deletedAt: null,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
+    // const user = UserMapper.toDomain({
+    //   _id: '',
+    //   username,
+    //   password,
+    //   email,
+    //   name,
+    //   isDeleted: false,
+    //   deletedAt: null,
+    //   createdAt: new Date(),
+    //   updatedAt: new Date(),
+    // });
 
     // let user = await this.userRepository.findFirstUser(validUsername, email);
     // if (user) {
