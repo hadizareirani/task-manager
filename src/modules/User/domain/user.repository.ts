@@ -5,13 +5,13 @@ import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 import { Result } from 'src/shared/core/result';
 
 export interface UserRepository {
-  findByUsername(username: Username): Promise<User | null>;
-  findById(id: string): Promise<User | null>;
+  findByUsername(username: Username): Promise<Result<User, ErrorListEnum>>;
+  findById(id: string): Promise<Result<User, ErrorListEnum>>;
 
   findFirstUser(
     username: Username,
     email: Email,
   ): Promise<Result<User, ErrorListEnum>>;
 
-  create(user: User): Promise<User>;
+  create(user: User): Promise<Result<User, ErrorListEnum>>;
 }

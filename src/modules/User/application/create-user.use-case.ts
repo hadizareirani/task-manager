@@ -1,8 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UserRepository } from '../domain';
+import { UserRepository, User } from '../domain';
 import { USER_REPOSITORY } from '../constants/user-repository.token';
-import { UserMapper } from '../infrastructure/mappers/user.mapper';
 import { OperationResponse } from 'src/shared/core/operation-response';
+import { Username } from '../domain/value-object/username.vo';
+import { Email } from '../domain/value-object/email.vo';
+import { Password } from '../domain/value-object/password.vo';
+import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 
 @Injectable()
 export class CreateUserUseCase {
@@ -16,29 +19,31 @@ export class CreateUserUseCase {
     name: string,
     password: string,
   ) {
-    // const validUsername = Username.create(username);
-    // if (!validUsername)
-    //   return OperationResponse.fail(ErrorListEnum.UsernameIsWrong);
+    const usernameOrError = Username.create(username);
+    if (usernameOrError.isFailure)
+      return OperationResponse.fail(usernameOrError.getError());
 
-    // if (!Email.isValid(email)) {
-    //   return OperationResponse.fail(ErrorListEnum.EmailIsNotValid);
-    // }
-    // const hashedPassword = await Password.create(password, username);
-    // user = new User(
-    //   '',
-    //   username,
-    //   Email.create(email),
-    //   name,
-    //   hashedPassword,
-    //   false,
-    //   null,
-    // );
+    const emailOrError = Email.create(email);
+    if (emailOrError.isFailure)
+      return OperationResponse.fail(emailOrError.getError());
 
-    const user = await UserMapper.toDomain({
-      _id: '',
-      username,
-      password,
-      email,
+    const passwordOrError = await Password.create(password, username);
+    if (passwordOrError.isFailure)
+      return OperationResponse.fail(passwordOrError.getError());
+
+    const hasUser = await this.userRepository.findFirstUser(
+      usernameOrError.getValue(),
+      emailOrError.getValue(),
+    );
+
+    if (hasUser.isSuccess) {
+      return OperationResponse.fail(ErrorListEnum.UserAlreadyExists);
+    }
+    const userEntity = User.create({
+      id: '',
+      username: usernameOrError.getValue(),
+      password: passwordOrError.getValue(),
+      email: emailOrError.getValue(),
       name,
       isDeleted: false,
       deletedAt: null,
@@ -46,18 +51,8 @@ export class CreateUserUseCase {
       updatedAt: new Date(),
     });
 
+    const user = await this.userRepository.create(userEntity);
     if (user.isFailure) return OperationResponse.fail(user.getError());
-    const userValue = user.getValue();
-    let test = await this.userRepository.findFirstUser(
-      userValue.username,
-      user.email,
-    );
-    // if (user) {
-    //   return OperationResponse.fail(ErrorListEnum.UserAlreadyExists);
-    // }
-
-    // const userId = (await this.userRepository.create(user)).id;
-    // return OperationResponse.success<string>(userId);
-    return { username, email, name, password };
+    return OperationResponse.success(user.getValue());
   }
 }

@@ -15,23 +15,29 @@ export class UserRepositoryImpl implements UserRepository {
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
 
-  async create(user: UserEntity): Promise<UserEntity> {
+  async create(user: UserEntity): Promise<Result<UserEntity, ErrorListEnum>> {
     const createdUser = new this.userModel(UserMapper.toPersistence(user));
     const savedUser = await createdUser.save();
     return UserMapper.toDomain(savedUser);
   }
 
-  async findByUsername(username: Username): Promise<UserEntity | null> {
+  async findByUsername(
+    username: Username,
+  ): Promise<Result<UserEntity, ErrorListEnum>> {
     const userDoc = await this.userModel
       .findOne({ username: username.value })
       .exec();
-    if (!userDoc) return null;
+    if (!userDoc) {
+      return Result.fail(ErrorListEnum.UserNotFound);
+    }
     return UserMapper.toDomain(userDoc);
   }
 
-  async findById(id: string): Promise<UserEntity | null> {
+  async findById(id: string): Promise<Result<UserEntity, ErrorListEnum>> {
     const userDoc = await this.userModel.findById(id).exec();
-    if (!userDoc) return null;
+    if (!userDoc) {
+      return Result.fail(ErrorListEnum.UserNotFound);
+    }
     return UserMapper.toDomain(userDoc);
   }
 
