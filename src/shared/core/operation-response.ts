@@ -1,30 +1,33 @@
-import { ErrorListEnum } from '../enums/error-list.enum';
-
-export class OperationResponse<TValue> {
+export class OperationResponse<TValue, EValue> {
   private result?: TValue;
-  private error?: ErrorListEnum | null;
+  private error?: EValue;
   private isSuccess: boolean;
 
-  constructor(value: TValue, error?: ErrorListEnum) {
+  constructor(value?: TValue, error?: EValue) {
     this.result = value;
-    this.error = error || null;
+    this.error = error;
     this.isSuccess = !error;
   }
-  static success<T>(value: T): OperationResponse<T> {
-    return new OperationResponse(value);
+  static success<TValue>(value: TValue): OperationResponse<TValue, never> {
+    return new OperationResponse<TValue, never>(value);
   }
 
-  static fail(error: ErrorListEnum): OperationResponse<null> {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    return new OperationResponse<null>(null as any, error);
+  static fail<EValue>(error: EValue): OperationResponse<never, EValue> {
+    return new OperationResponse<never, EValue>(undefined, error);
   }
 
-  getValue(): TValue | undefined {
-    return this.result;
+  public getValue(): TValue {
+    if (!this.isSuccess) {
+      throw new Error('Cannot get value from failed result');
+    }
+    return this.result!;
   }
 
-  getError(): ErrorListEnum | null | undefined {
-    return this.error;
+  public getError(): EValue {
+    if (this.isSuccess) {
+      throw new Error('Cannot get error from successful result');
+    }
+    return this.error!;
   }
 
   isSucceeded(): boolean {

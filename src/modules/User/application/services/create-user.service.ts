@@ -1,24 +1,24 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UserRepository, User } from '../domain';
-import { USER_REPOSITORY } from '../constants/user-repository.token';
+import { Username } from '../../domain/value-object/username.vo';
 import { OperationResponse } from 'src/shared/core/operation-response';
-import { Username } from '../domain/value-object/username.vo';
-import { Email } from '../domain/value-object/email.vo';
-import { Password } from '../domain/value-object/password.vo';
+import { Email } from '../../domain/value-object/email.vo';
+import { Password } from '../../domain/value-object/password.vo';
+import { USER_REPOSITORY } from '../../constants/user-repository.token';
+import { User, UserRepository } from '../../domain';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 
 @Injectable()
-export class CreateUserUseCase {
+export class CreateUserService {
   constructor(
     @Inject(USER_REPOSITORY) private readonly userRepository: UserRepository,
   ) {}
 
-  async execute(
+  async createUser(
     username: string,
     email: string,
     name: string,
     password: string,
-  ) {
+  ): Promise<OperationResponse<User, ErrorListEnum>> {
     const usernameOrError = Username.create(username);
     if (usernameOrError.isFailure)
       return OperationResponse.fail(usernameOrError.getError());

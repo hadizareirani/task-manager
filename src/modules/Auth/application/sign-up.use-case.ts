@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserUseCase } from 'src/modules/User';
+import { CreateUserService } from 'src/modules/User';
 import { OperationResponse } from 'src/shared/core/operation-response';
 
 @Injectable()
 export class SignUpUseCase {
   constructor(
-    private readonly createUserUseCase: CreateUserUseCase,
+    private readonly createUserService: CreateUserService,
     private jwtService: JwtService,
   ) {}
 
@@ -16,7 +16,7 @@ export class SignUpUseCase {
     name: string,
     password: string,
   ) {
-    const result = await this.createUserUseCase.execute(
+    const result = await this.createUserService.createUser(
       username,
       email,
       name,
