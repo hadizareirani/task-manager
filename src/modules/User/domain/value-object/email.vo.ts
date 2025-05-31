@@ -8,10 +8,9 @@ export class Email {
     return this._value;
   }
 
-  static create(email: string) {
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return Result.fail(ErrorListEnum.EmailIsNotValid);
-    }
-    return Result.ok(new Email(email));
+  static create(raw: string): Result<Email, ErrorListEnum> {
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(raw);
+    if (!isValid) return Result.fail(ErrorListEnum.EmailIsNotValid);
+    return Result.ok(new Email(raw));
   }
 }

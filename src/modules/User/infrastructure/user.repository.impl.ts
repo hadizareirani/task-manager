@@ -6,6 +6,8 @@ import { User, UserDocument } from '../schemas/user.schema';
 import { Username } from '../domain/value-object/username.vo';
 import { Email } from 'src/modules/User/domain/value-object/email.vo';
 import { UserMapper } from './mappers/user.mapper';
+import { Result } from 'src/shared/core/result';
+import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {
@@ -36,11 +38,14 @@ export class UserRepositoryImpl implements UserRepository {
   async findFirstUser(
     username: Username,
     email: Email,
-  ): Promise<UserEntity | null> {
+  ): Promise<Result<UserEntity, ErrorListEnum>> {
     const userDoc = await this.userModel.findOne({
       $or: [{ username: username.value }, { email: email.value }],
     });
-    if (!userDoc) return null;
+    if (!userDoc) {
+      return Result.fail(ErrorListEnum.UserNotFound);
+    }
+
     return UserMapper.toDomain(userDoc);
   }
 }

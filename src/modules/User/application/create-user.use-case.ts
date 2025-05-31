@@ -47,11 +47,11 @@ export class CreateUserUseCase {
     });
 
     if (user.isFailure) return OperationResponse.fail(user.getError());
-    // const userValue = user.getValue();
-    // let user = await this.userRepository.findFirstUser(
-    //   userValue.username,
-    //   userValue.email,
-    // );
+    const userValue = user.getValue();
+    let test = await this.userRepository.findFirstUser(
+      userValue.username,
+      user.email,
+    );
     // if (user) {
     //   return OperationResponse.fail(ErrorListEnum.UserAlreadyExists);
     // }

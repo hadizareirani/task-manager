@@ -13,12 +13,13 @@ export class UserMapper {
     raw: UserToDomainMapperParams,
   ): Promise<Result<userEntity, ErrorListEnum>> {
     const usernameResult = Username.create(raw.username);
-    const emailResult = Email.create(raw.email);
-    const passwordResult = await Password.create(raw.password, raw.username);
+    if (usernameResult.isFailure) return Result.fail(usernameResult.getError());
 
-    if (usernameResult.isFailure) return Result.fail(usernameResult.error);
-    if (emailResult.isFailure) return Result.fail(emailResult.error);
-    if (passwordResult.isFailure) return Result.fail(passwordResult.error);
+    const emailResult = Email.create(raw.email);
+    if (emailResult.isFailure) return Result.fail(emailResult.getError());
+
+    const passwordResult = await Password.create(raw.password, raw.username);
+    if (passwordResult.isFailure) return Result.fail(passwordResult.getError());
 
     const user = userEntity.create({
       id: raw._id.toString(),

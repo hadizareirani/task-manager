@@ -8,7 +8,7 @@ export class Username {
     return this._value;
   }
 
-  static create(username: string) {
+  static create(username: string): Result<Username, ErrorListEnum> {
     if (!username || username === '' || username.length < 5) {
       return Result.fail(ErrorListEnum.UsernameIsWrong);
     }

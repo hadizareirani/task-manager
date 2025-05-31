@@ -13,7 +13,10 @@ export class Password {
   //   return await bcrypt.compare(`${password}-${username}`, hash);
   // }
 
-  static async create(password: string, username: string) {
+  static async create(
+    password: string,
+    username: string,
+  ): Promise<Result<Password, ErrorListEnum>> {
     if (!password) return Result.fail(ErrorListEnum.PasswordIsRequired);
     const strongPasswordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+={}[\]:;"'<>,.?/~`\\|]).{8,}$/;
