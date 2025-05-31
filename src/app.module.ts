@@ -1,4 +1,3 @@
-import { CreateUserService } from './modules/User/application/services/create-user.service';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -25,7 +24,6 @@ import { ResponseModelInterceptor } from './shared/interceptors/response-model/r
   ],
   controllers: [],
   providers: [
-    CreateUserService,
     {
       provide: APP_INTERCEPTOR,
       useClass: ResponseModelInterceptor,

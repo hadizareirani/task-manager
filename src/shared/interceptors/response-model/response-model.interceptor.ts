@@ -16,15 +16,15 @@ interface RequestWithUser extends Request {
   user?: JwtPayload;
 }
 @Injectable()
-export class ResponseModelInterceptor<T>
-  implements NestInterceptor<OperationResponse<T>, OperationResponse<T>>
+export class ResponseModelInterceptor<T, E>
+  implements NestInterceptor<OperationResponse<T, E>, OperationResponse<T, E>>
 {
   constructor(private readonly jwtService: JwtService) {}
 
   async intercept(
     context: ExecutionContext,
     next: CallHandler,
-  ): Promise<Observable<OperationResponse<T>>> {
+  ): Promise<Observable<OperationResponse<T, E>>> {
     const req = context.switchToHttp().getRequest<RequestWithUser>();
     const res = context.switchToHttp().getResponse<Response>();
     const userToken = req?.headers?.authorization?.split(' ')[1];
@@ -32,7 +32,7 @@ export class ResponseModelInterceptor<T>
       req.user = await this.jwtService.decode(userToken);
     }
     return next.handle().pipe(
-      map((result: OperationResponse<T>) => {
+      map((result: OperationResponse<T, E>) => {
         if (req.method === 'POST') {
           if (res.statusCode === 201) {
             res.status(HttpStatus.OK);
