@@ -38,7 +38,7 @@ export class UserMapper {
 
   static toPersistence(user: userEntity) {
     return {
-      _id: user.id,
+      ...(user.id && { _id: user.id }),
       username: user.username,
       email: user.email,
       name: user.name,
