@@ -4,6 +4,7 @@ import { SignUpUseCase } from './application/sign-up.use-case';
 import { AuthController } from './interface/controller/auth.controller';
 import { UserModule } from '../User/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { LoginUseCase } from './application/login.use-case';
 
 @Module({
   imports: [
@@ -20,6 +21,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
   ],
   controllers: [AuthController],
-  providers: [SignUpUseCase],
+  providers: [SignUpUseCase, LoginUseCase],
 })
 export class AuthModule {}
