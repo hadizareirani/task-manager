@@ -22,7 +22,7 @@ export class SignUpUseCase {
       name,
       password,
     );
-    if (!result.isSucceeded()) return result;
+    if (!result.isSucceeded()) return result.getError();
     const token = await this.jwtService.signAsync({ sub: result.getValue() });
     return OperationResponse.success(token);
   }

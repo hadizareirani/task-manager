@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Username } from '../../domain/value-object/username.vo';
+import { User, UserRepository } from '../../domain';
+import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 import { OperationResponse } from 'src/shared/core/operation-response';
+import { Username } from '../../domain/value-object/username.vo';
 import { Email } from '../../domain/value-object/email.vo';
 import { Password } from '../../domain/value-object/password.vo';
 import { USER_REPOSITORY } from '../../constants/user-repository.token';
-import { User, UserRepository } from '../../domain';
-import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 
 @Injectable()
 export class CreateUserService {

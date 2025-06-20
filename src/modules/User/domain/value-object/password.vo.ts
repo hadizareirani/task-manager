@@ -9,9 +9,15 @@ export class Password {
     return this._value;
   }
 
-  // static async isValid(password: string, username: string, hash: string) {
-  //   return await bcrypt.compare(`${password}-${username}`, hash);
-  // }
+  static async isValid(password: string, username: string, hash: string) {
+    const isValidPassword = await bcrypt.compare(
+      `${password}-${username}-${process.env.PASSWORD_HASH}`,
+      hash,
+    );
+    // TODO: i have bug this here
+    if (!isValidPassword) return Result.fail(ErrorListEnum.UserNotFound);
+    return Result.ok(isValidPassword);
+  }
 
   static async create(
     password: string,
