@@ -14,7 +14,7 @@ export class LoginUseCase {
     const hasUser =
       await this.findUserByUsernameService.findUserByUsername(username);
 
-    if (!hasUser.isSucceeded) return hasUser.getError();
+    if (!hasUser.isSucceeded()) return hasUser.getError();
 
     const isValidPassword = await Password.isValid(
       password,
