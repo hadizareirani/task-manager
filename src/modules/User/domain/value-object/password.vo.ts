@@ -14,7 +14,6 @@ export class Password {
       `${password}-${username}-${process.env.PASSWORD_HASH}`,
       hash,
     );
-    // TODO: i have bug this here
     if (!isValidPassword) return Result.fail(ErrorListEnum.UserNotFound);
     return Result.ok(isValidPassword);
   }
@@ -36,5 +35,13 @@ export class Password {
       saltOrRounds,
     );
     return Result.ok(new Password(hashPassword));
+  }
+
+  static fromHashed(hashed: string): Result<Password, ErrorListEnum> {
+    if (!hashed || typeof hashed !== 'string') {
+      return Result.fail(ErrorListEnum.UserNotFound);
+    }
+
+    return Result.ok(new Password(hashed));
   }
 }

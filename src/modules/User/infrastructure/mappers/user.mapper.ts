@@ -9,16 +9,16 @@ import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 type UserToDomainMapperParams = User & Pick<UserDocument, '_id'>;
 
 export class UserMapper {
-  static async toDomain(
+  static toDomain(
     raw: UserToDomainMapperParams,
-  ): Promise<Result<userEntity, ErrorListEnum>> {
+  ): Result<userEntity, ErrorListEnum> {
     const usernameResult = Username.create(raw.username);
     if (usernameResult.isFailure) return Result.fail(usernameResult.getError());
 
     const emailResult = Email.create(raw.email);
     if (emailResult.isFailure) return Result.fail(emailResult.getError());
 
-    const passwordResult = await Password.create(raw.password, raw.username);
+    const passwordResult = Password.fromHashed(raw.password);
     if (passwordResult.isFailure) return Result.fail(passwordResult.getError());
 
     const user = userEntity.create({
