@@ -3,12 +3,15 @@ import { SignUpUseCase } from '../../application/sign-up.use-case';
 import { LoginUseCase } from '../../application/login.use-case';
 import { SignUpDto } from '../dto/sign-up.dto';
 import { LoginDto } from '../dto/login.dto';
+import { ForgotPasswordDto } from '../dto/forgot-password.dto';
+import { ForgotPasswordUseCase } from '../../application/forgot-password.use-case';
 
 @Controller('/auth')
 export class AuthController {
   constructor(
     private readonly signUpUseCase: SignUpUseCase,
     private readonly loginUseCase: LoginUseCase,
+    private readonly forgotPasswordUseCase: ForgotPasswordUseCase,
   ) {}
   @Post('/sign-up')
   signUp(@Body() body: SignUpDto) {
@@ -23,5 +26,10 @@ export class AuthController {
   @Post('/login')
   login(@Body() body: LoginDto) {
     return this.loginUseCase.execute(body.username, body.password);
+  }
+
+  @Post('/forgot-password')
+  forgotPassword(@Body() body: ForgotPasswordDto) {
+    return this.forgotPasswordUseCase.execute(body.username, body.email);
   }
 }
