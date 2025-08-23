@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  task-manage-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: task-manage-dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.development
+    volumes:
+      - .:/usr/src/task-manage
+      - /usr/src/task-manage/node_modules
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - task-manage-network
+    command: npm run start:dev
+
+  mongo:
+    image: mongo:6.0
+    container_name: task-manage-mongodb-dev
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    env_file:
+      - .env.development
+    volumes:
+      - task_manage_mongodb_data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - task-manage-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: task-manage-mongo-express-dev
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env.development
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - task-manage-network
+
+volumes:
+  task_manage_mongodb_data:
+    driver: local
+
+networks:
+  task-manage-network:
+    driver: bridge

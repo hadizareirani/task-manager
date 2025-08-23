@@ -1,3 +1,43 @@
+# Dependencies
 node_modules
+npm-debug.log*
+
+# Build outputs
 dist
+build
+
+# Environment files (we'll copy them explicitly)
+.env*
+!.env.example
+
+# Git
 .git
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Coverage
+coverage
+.coverage
+
+# Testing
+.jest
+
+# Temporary files
+.tmp
+.temp

@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  task-manage-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: task-manage-prod
+    restart: always
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.production
+    depends_on:
+      - mongo
+    networks:
+      - task-manage-network
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+
+  mongo:
+    image: mongo:6.0
+    container_name: task-manage-mongodb-prod
+    restart: always
+    ports:
+      - "27017:27017"
+    env_file:
+      - .env.production
+    volumes:
+      - task_manage_mongodb_data_prod:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - task-manage-network
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: task-manage-mongo-express-prod
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env.production
+    depends_on:
+      - mongo
+    networks:
+      - task-manage-network
+    profiles:
+      - admin-tools
+
+volumes:
+  task_manage_mongodb_data_prod:
+    driver: local
+
+networks:
+  task-manage-network:
+    driver: bridge

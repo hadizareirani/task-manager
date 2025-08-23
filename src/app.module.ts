@@ -11,11 +11,19 @@ import { ResponseModelInterceptor } from './shared/interceptors/response-model/r
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
+      cache: true,
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        uri: configService.get<string>('DATABASE_URL'),
+        uri: configService.get<string>('MONGODB_URI'),
+        dbName: configService.get<string>('MONGODB_DATABASE'),
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        retryWrites: true,
+        w: 'majority',
+
       }),
       inject: [ConfigService],
     }),
