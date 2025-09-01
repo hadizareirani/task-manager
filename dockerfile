@@ -1,34 +1,20 @@
-FROM node:18-alpine AS development
+# Use the official Node.js runtime as base image
+FROM node:18-alpine
 
-WORKDIR /usr/src/task-manage
+# Set the working directory inside the container
+WORKDIR /app
 
+# Copy package.json and package-lock.json (if available)
 COPY package*.json ./
 
-RUN npm ci --only=development
+# Install all dependencies (including dev dependencies)
+RUN npm ci
 
+# Copy the rest of the application code
 COPY . .
 
-RUN npm run build
+# Expose the port that your app runs on
+EXPOSE 3000
 
-FROM node:18-alpine AS production
-
-
-WORKDIR /usr/src/task-manage
-
-COPY package*.json ./
-
-RUN npm ci --only=production && npm cache clean --force
-
-COPY --from=development /usr/src/task-manage/dist ./dist
-
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S taskmanage -u 1001
-
-RUN chown -R taskmanage:nodejs /usr/src/task-manage
-USER taskmanage
-
-
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:3000/health || exit 1
-
-CMD ["node", "dist/main"]
+# Define the command to run your application in development mode
+CMD ["npm", "run", "start:dev"]

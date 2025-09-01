@@ -2,28 +2,27 @@
 node_modules
 npm-debug.log*
 
+# Environment files (keep .env.example)
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+!.env.example
+
 # Build outputs
 dist
 build
 
-# Environment files (we'll copy them explicitly)
-.env*
-!.env.example
+# IDE files
+.vscode
+.idea
 
 # Git
 .git
 .gitignore
 
-# Docker
-Dockerfile
-docker-compose*.yml
-.dockerignore
-
-# IDE
-.vscode
-.idea
-
-# OS
+# OS files
 .DS_Store
 Thumbs.db
 
@@ -31,13 +30,9 @@ Thumbs.db
 logs
 *.log
 
-# Coverage
+# Test coverage
 coverage
-.coverage
 
-# Testing
-.jest
-
-# Temporary files
-.tmp
-.temp
+# Docker files (optional - you might want to keep these)
+Dockerfile
+.dockerignore
