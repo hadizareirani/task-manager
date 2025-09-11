@@ -34,6 +34,26 @@ services:
       - mongo
     networks:
       - task-manager-network
+  mongo-express:
+    image: mongo-express:1.0.2-20
+    container_name: task-manager-mongo-express
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_EXPRESS_USERNAME}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_EXPRESS_PASSWORD}
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: true
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+    networks:
+      - task-manager-network
+    profiles:
+      - development
 
 # Define volumes for data persistence
 volumes:
