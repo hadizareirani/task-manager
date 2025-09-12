@@ -13,4 +13,11 @@ export class Email {
     if (!isValid) return Result.fail(ErrorListEnum.EmailIsNotValid);
     return Result.ok(new Email(raw));
   }
+
+  static campare(raw: string, validEmail: Email) {
+    const value = this.create(raw);
+    if(value.isFailure) return value;
+    if(value.getValue().value !== validEmail.value) return Result.fail(ErrorListEnum.EmailIsNotValid);
+    return value;
+  }
 }

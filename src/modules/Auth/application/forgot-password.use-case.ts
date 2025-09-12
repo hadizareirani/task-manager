@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { FindUserByUsernameService } from 'src/modules/User';
 
 @Injectable()
 export class ForgotPasswordUseCase {
-  //   constructor(
-  //     private readonly createUserService: CreateUserService,
-  //     private jwtService: JwtService,
-  //   ) {}
+    constructor(
+      private readonly findUserByUsernameService: FindUserByUsernameService
+    ) {}
 
-  execute(username: string, email: string) {
+  async execute(username: string, email: string) {
+    const hasUser = await this.findUserByUsernameService.findUserByUsername(username);
+    if (!hasUser.isSucceeded()) return hasUser.getError();
+    
+    
     return { username, email };
   }
 }
