@@ -14,4 +14,5 @@ export class Username {
     }
     return Result.ok(new Username(username));
   }
+  
 }
