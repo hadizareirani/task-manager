@@ -14,4 +14,8 @@ export class Name {
         return Result.ok(new Name(trimName));
     }
 
+    static fromPersistence(name: string): Name {
+        return new Name(name);
+    }
+
 }

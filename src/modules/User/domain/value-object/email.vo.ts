@@ -14,6 +14,10 @@ export class Email {
     return Result.ok(new Email(raw));
   }
 
+  static fromPersistence(email: string): Email {
+    return new Email(email);
+  }
+
   static campare(raw: string, validEmail: Email) {
     const value = this.create(raw);
     if(value.isFailure) return value;

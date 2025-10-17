@@ -15,5 +15,9 @@ export class Username {
     }
     return Result.ok(new Username(username.trim()));
   }
+
+  static fromPersistence(username: string): Username {
+    return new Username(username);
+  }
   
 }

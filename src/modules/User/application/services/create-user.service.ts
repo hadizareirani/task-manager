@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Email, Password, User, Username, UserRepository } from '../../domain';
+import { Email, Name, Password, User, Username, UserRepository } from '../../domain';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 import { OperationResponse } from 'src/shared/core/operation-response';
 import { USER_REPOSITORY } from '../../constants/user-repository.token';
@@ -28,6 +28,10 @@ export class CreateUserService {
     if (passwordOrError.isFailure)
       return OperationResponse.fail(passwordOrError.getError());
 
+    const nameOrError = Name.create(name);
+    if (nameOrError.isFailure)
+      return OperationResponse.fail(nameOrError.getError());
+
     const hasUser = await this.userRepository.findFirstUser(
       usernameOrError.getValue(),
       emailOrError.getValue(),
@@ -41,7 +45,7 @@ export class CreateUserService {
       username: usernameOrError.getValue(),
       password: passwordOrError.getValue(),
       email: emailOrError.getValue(),
-      name,
+      name: nameOrError.getValue(),
       isDeleted: false,
       deletedAt: null,
       createdAt: new Date(),

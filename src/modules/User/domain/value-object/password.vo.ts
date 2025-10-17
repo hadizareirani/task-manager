@@ -44,4 +44,8 @@ export class Password {
 
     return Result.ok(new Password(hashed));
   }
+
+  static fromPersistence(hashedPassword: string): Password {
+    return new Password(hashedPassword);
+  }
 }
