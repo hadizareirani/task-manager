@@ -1,3 +1,3 @@
-export * from './user.entity';
-export * from './user.repository';
+export * from './entity';
+export * from './repository';
 export * from './value-object';

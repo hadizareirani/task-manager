@@ -1,4 +1,4 @@
-import { Email, Name, Password, Username } from "./value-object";
+import { Email, Name, Password, Username } from "../value-object";
 
 
 export class User {

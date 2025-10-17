@@ -1,8 +1,7 @@
-
-import { User } from './user.entity';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 import { Result } from 'src/shared/core/result';
-import { Email, Username } from './value-object';
+import { User } from '../entity';
+import { Email, Username } from '../value-object';
 
 export interface UserRepository {
   findByUsername(username: Username): Promise<Result<User, ErrorListEnum>>;
