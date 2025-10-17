@@ -18,7 +18,7 @@ export class Email {
     return new Email(email);
   }
 
-  static campare(raw: string, validEmail: Email) {
+  static compare(raw: string, validEmail: Email) {
     const value = this.create(raw);
     if(value.isFailure) return value;
     if(value.getValue().value !== validEmail.value) return Result.fail(ErrorListEnum.EmailIsNotValid);

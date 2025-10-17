@@ -5,15 +5,13 @@ import { Email } from "../../domain";
 
 @Injectable()
 export class CompareUserEmailService {
-  constructor(
-    
-  ) {}
+  constructor() {}
 
-  async compare(
+  compare(
     email: string,
     validEmail: Email
-  ): Promise<OperationResponse<Email, ErrorListEnum>> {
-    const emailOrError =  Email.campare(email, validEmail);
+  ): OperationResponse<Email, ErrorListEnum> {
+    const emailOrError =  Email.compare(email, validEmail);
     if (emailOrError.isFailure)
       return OperationResponse.fail(emailOrError.getError());
     return OperationResponse.success(emailOrError.getValue());

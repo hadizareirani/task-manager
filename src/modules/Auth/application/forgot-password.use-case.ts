@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CompareUserEmailService, FindUserByUsernameService } from 'src/modules/User';
+import { OperationResponse } from 'src/shared/core/operation-response';
 
 
 @Injectable()
@@ -13,9 +14,10 @@ export class ForgotPasswordUseCase {
     const hasUser = await this.findUserByUsernameService.findUserByUsername(username);
     if (!hasUser.isSucceeded()) return hasUser.getError();
 
-    // const hasValidEmail = this.compareUserEmailService.compare(email, hasUser.getValue().email)
-    // TODO: implement email comparison logic
+    const hasValidEmail = this.compareUserEmailService.compare(email, hasUser.getValue().email)
+    if(!hasValidEmail.isSucceeded()) return hasValidEmail.getError();
+    
 
-    return { username, email };
+    return OperationResponse.success(true);
   }
 }
