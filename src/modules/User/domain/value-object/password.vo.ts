@@ -9,10 +9,10 @@ export class Password {
     return this._value;
   }
 
-  static async isValid(password: string, username: string, hash: string) {
+  static async isValid(password: string, username: string, hash: Password) {
     const isValidPassword = await bcrypt.compare(
       `${password}-${username}-${process.env.PASSWORD_HASH}`,
-      hash,
+        hash.value,
     );
     if (!isValidPassword) return Result.fail(ErrorListEnum.UserNotFound);
     return Result.ok(isValidPassword);
