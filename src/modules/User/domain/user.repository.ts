@@ -1,8 +1,8 @@
-import { Email } from 'src/modules/User/domain/value-object/email.vo';
+
 import { User } from './user.entity';
-import { Username } from './value-object/username.vo';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 import { Result } from 'src/shared/core/result';
+import { Email, Username } from './value-object';
 
 export interface UserRepository {
   findByUsername(username: Username): Promise<Result<User, ErrorListEnum>>;

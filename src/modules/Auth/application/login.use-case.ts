@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { FindUserByUsernameService } from 'src/modules/User';
-import { Password } from 'src/modules/User/domain/value-object/password.vo';
+import { FindUserByUsernameService, Password } from 'src/modules/User';
 import { OperationResponse } from 'src/shared/core/operation-response';
 
 @Injectable()

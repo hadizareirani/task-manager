@@ -1,6 +1,5 @@
-import { Email } from 'src/modules/User/domain/value-object/email.vo';
-import { Password } from 'src/modules/User/domain/value-object/password.vo';
-import { Username } from './value-object/username.vo';
+import { Email, Password, Username } from "./value-object";
+
 
 export class User {
   private readonly _id: string;
@@ -63,20 +62,20 @@ export class User {
     return this._id;
   }
 
-  get username(): string {
-    return this._username.value;
+  get username(): Username {
+    return this._username;
   }
 
-  get email(): string {
-    return this._email.value;
+  get email(): Email {
+    return this._email;
   }
 
   get name(): string {
     return this._name;
   }
 
-  get password(): string {
-    return this._password.value;
+  get password(): Password {
+    return this._password;
   }
 
   get isDeleted(): boolean {

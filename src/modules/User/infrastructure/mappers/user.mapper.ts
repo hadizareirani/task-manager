@@ -1,8 +1,5 @@
-import { Email } from 'src/modules/User/domain/value-object/email.vo';
-import { Username } from '../../domain/value-object/username.vo';
 import { User, UserDocument } from '../../schemas/user.schema';
-import { Password } from 'src/modules/User/domain/value-object/password.vo';
-import { User as userEntity } from '../../domain';
+import { Email, Password, User as userEntity, Username } from '../../domain';
 import { Result } from 'src/shared/core/result';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 

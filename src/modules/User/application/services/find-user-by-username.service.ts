@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { USER_REPOSITORY } from '../../constants/user-repository.token';
-import { User, UserRepository } from '../../domain';
-import { Username } from '../../domain/value-object/username.vo';
+import { User, Username, UserRepository } from '../../domain';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 import { OperationResponse } from 'src/shared/core/operation-response';
 

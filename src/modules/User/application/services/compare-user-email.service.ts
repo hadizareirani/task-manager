@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { Email } from "../../domain/value-object/email.vo";
 import { OperationResponse } from "src/shared/core/operation-response";
 import { ErrorListEnum } from "src/shared/enums/error-list.enum";
+import { Email } from "../../domain";
 
 @Injectable()
 export class CompareUserEmailService {
