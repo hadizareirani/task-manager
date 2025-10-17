@@ -5,4 +5,6 @@ export enum ErrorListEnum {
   UsernameIsWrong = 4,
   PasswordIsRequired = 5,
   PasswordIsWeak = 6,
+  NameIsRequired = 7,
+  NameIsInvalid = 8
 }

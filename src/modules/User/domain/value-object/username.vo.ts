@@ -9,11 +9,11 @@ export class Username {
   }
 
   static create(username: string): Result<Username, ErrorListEnum> {
-    const trimmedUsername = username.trim();
-    if (!trimmedUsername || trimmedUsername.length === 0 || trimmedUsername.length < 5) {
+
+    if (!username || username.trim().length === 0 || username.trim().length < 5) {
       return Result.fail(ErrorListEnum.UsernameIsWrong);
     }
-    return Result.ok(new Username(trimmedUsername));
+    return Result.ok(new Username(username.trim()));
   }
   
 }

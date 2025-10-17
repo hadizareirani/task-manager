@@ -1,11 +1,11 @@
-import { Email, Password, Username } from "./value-object";
+import { Email, Name, Password, Username } from "./value-object";
 
 
 export class User {
   private readonly _id: string;
   private _username: Username;
   private _email: Email;
-  private _name: string;
+  private _name: Name;
   private _password: Password;
   private _isDeleted: boolean;
   private _deletedAt: Date | null;
@@ -16,7 +16,7 @@ export class User {
     id: string,
     username: Username,
     email: Email,
-    name: string,
+    name: Name,
     password: Password,
     isDeleted = false,
     deletedAt: Date | null = null,
@@ -38,7 +38,7 @@ export class User {
     id: string;
     username: Username;
     email: Email;
-    name: string;
+    name: Name;
     password: Password;
     createdAt?: Date;
     updatedAt?: Date;
@@ -70,7 +70,7 @@ export class User {
     return this._email;
   }
 
-  get name(): string {
+  get name(): Name {
     return this._name;
   }
 
@@ -94,8 +94,18 @@ export class User {
     return this._updatedAt;
   }
 
-  updateName(newName: string): void {
+  updateName(newName: Name): void {
     this._name = newName;
+    this.touch();
+  }
+
+  changePassword(newPassword: Password): void {
+    this._password = newPassword;
+    this.touch();
+  }
+  
+  changeEmail(newEmail: Email): void {
+    this._email = newEmail;
     this.touch();
   }
 
