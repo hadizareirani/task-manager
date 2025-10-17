@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { User, UserSchema } from './schemas/user.schema';
 import { UserRepositoryImpl } from './infrastructure/user.repository.impl';
 import {
+  CompareUserEmailService,
   CreateUserService,
   CreateUserUseCase,
   FindUserByUsernameService,
@@ -17,12 +18,13 @@ import { MongooseModule } from '@nestjs/mongoose';
   providers: [
     CreateUserService,
     FindUserByUsernameService,
+    CompareUserEmailService,
     CreateUserUseCase,
     {
       provide: USER_REPOSITORY,
       useClass: UserRepositoryImpl,
     },
   ],
-  exports: [CreateUserService, FindUserByUsernameService],
+  exports: [CreateUserService, FindUserByUsernameService, CompareUserEmailService],
 })
 export class UserModule {}

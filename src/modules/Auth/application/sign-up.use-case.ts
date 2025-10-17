@@ -23,7 +23,7 @@ export class SignUpUseCase {
       password,
     );
     if (!result.isSucceeded()) return result.getError();
-    const token = await this.jwtService.signAsync({ sub: result.getValue() });
+    const token = await this.jwtService.signAsync({ sub: result.getValue().id });
     return OperationResponse.success(token);
   }
 }
