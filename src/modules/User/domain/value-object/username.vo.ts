@@ -9,8 +9,11 @@ export class Username {
   }
 
   static create(username: string): Result<Username, ErrorListEnum> {
-
-    if (!username || username.trim().length === 0 || username.trim().length < 5) {
+    if (
+      !username ||
+      username.trim().length === 0 ||
+      username.trim().length < 5
+    ) {
       return Result.fail(ErrorListEnum.UsernameIsWrong);
     }
     return Result.ok(new Username(username.trim()));
@@ -19,5 +22,4 @@ export class Username {
   static fromPersistence(username: string): Username {
     return new Username(username);
   }
-  
 }
