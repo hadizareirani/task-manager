@@ -1,29 +1,38 @@
 import { User, UserDocument } from '../../schemas/user.schema';
-import { Email, Name, Password, User as userEntity, Username } from '../../domain';
+import {
+  Email,
+  Name,
+  Password,
+  User as userEntity,
+  Username,
+} from '../../domain';
 import { Result } from 'src/shared/core/result';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 
 type UserToDomainMapperParams = User & Pick<UserDocument, '_id'>;
 
 export class UserMapper {
-
-  static toDomain(raw: UserToDomainMapperParams): Result<userEntity, ErrorListEnum> {
+  static toDomain(
+    raw: UserToDomainMapperParams,
+  ): Result<userEntity, ErrorListEnum> {
     const username = Username.fromPersistence(raw.username);
     const email = Email.fromPersistence(raw.email);
     const name = Name.fromPersistence(raw.name);
     const password = Password.fromPersistence(raw.password);
 
-    return Result.ok(userEntity.create({
-      id: raw._id.toString(),
-      username,
-      email,
-      password,
-      name,
-      isDeleted: raw.isDeleted,
-      deletedAt: raw.deletedAt,
-      createdAt: raw.createdAt,
-      updatedAt: raw.updatedAt,
-    }));
+    return Result.ok(
+      userEntity.create({
+        id: raw._id.toString(),
+        username,
+        email,
+        password,
+        name,
+        isDeleted: raw.isDeleted,
+        deletedAt: raw.deletedAt,
+        createdAt: raw.createdAt,
+        updatedAt: raw.updatedAt,
+      }),
+    );
   }
 
   static toDomainWithValidation(

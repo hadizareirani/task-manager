@@ -1,5 +1,4 @@
-import { Email, Name, Password, Username } from "../value-object";
-
+import { Email, Name, Password, Username } from '../value-object';
 
 export class User {
   private readonly _id: string;
@@ -103,7 +102,7 @@ export class User {
     this._password = newPassword;
     this.touch();
   }
-  
+
   changeEmail(newEmail: Email): void {
     this._email = newEmail;
     this.touch();

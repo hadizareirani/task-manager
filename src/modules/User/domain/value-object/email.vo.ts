@@ -20,8 +20,9 @@ export class Email {
 
   static compare(raw: string, validEmail: Email) {
     const value = this.create(raw);
-    if(value.isFailure) return value;
-    if(value.getValue().value !== validEmail.value) return Result.fail(ErrorListEnum.EmailIsNotValid);
+    if (value.isFailure) return value;
+    if (value.getValue().value !== validEmail.value)
+      return Result.fail(ErrorListEnum.EmailIsNotValid);
     return value;
   }
 }
