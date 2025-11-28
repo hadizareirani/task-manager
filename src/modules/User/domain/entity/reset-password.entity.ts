@@ -93,6 +93,14 @@ export class ResetPassword {
     return this._updatedAt;
   }
 
+  isExpired(): boolean {
+    return new Date() > this._expiresAt;
+  }
+
+  isValid(): boolean {
+    return !this.isExpired() && !this._isUsed;
+  }
+
   markAsUsed(): void {
     this._isUsed = true;
     this.touch();

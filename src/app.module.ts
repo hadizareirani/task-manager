@@ -23,7 +23,6 @@ import { ResponseModelInterceptor } from './shared/interceptors/response-model/r
         useUnifiedTopology: true,
         retryWrites: true,
         w: 'majority',
-
       }),
       inject: [ConfigService],
     }),

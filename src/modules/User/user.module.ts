@@ -9,6 +9,7 @@ import {
 } from './infrastructure/';
 import {
   CompareUserEmailService,
+  CreateResetPasswordService,
   CreateUserService,
   CreateUserUseCase,
   FindUserByUsernameService,
@@ -27,6 +28,7 @@ import { USER_REPOSITORY, RESET_PASSWORD_REPOSITORY } from './constants';
     CreateUserService,
     FindUserByUsernameService,
     CompareUserEmailService,
+    CreateResetPasswordService,
     CreateUserUseCase,
     {
       provide: USER_REPOSITORY,
@@ -41,6 +43,7 @@ import { USER_REPOSITORY, RESET_PASSWORD_REPOSITORY } from './constants';
     CreateUserService,
     FindUserByUsernameService,
     CompareUserEmailService,
+    CreateResetPasswordService,
   ],
 })
 export class UserModule {}
