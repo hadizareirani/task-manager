@@ -16,11 +16,11 @@ import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 export class ResetPasswordRepositoryImpl implements ResetPasswordRepository {
   constructor(
     @InjectModel(ResetPassword.name)
-    private readonly passwordResetModel: Model<ResetPasswordDocument>,
+    private readonly resetPasswordModel: Model<ResetPasswordDocument>,
   ) {}
 
   async create(resetPassword: ResetPasswordEntity) {
-    const createResetPassword = new this.passwordResetModel(
+    const createResetPassword = new this.resetPasswordModel(
       ResetPasswordMapper.toPersistence(resetPassword),
     );
     const response = await createResetPassword.save();
@@ -30,7 +30,7 @@ export class ResetPasswordRepositoryImpl implements ResetPasswordRepository {
   async findByToken(
     token: string,
   ): Promise<Result<ResetPasswordEntity, ErrorListEnum>> {
-    const tokenDoc = await this.passwordResetModel.findOne({ token }).exec();
+    const tokenDoc = await this.resetPasswordModel.findOne({ token }).exec();
     if (!tokenDoc) {
       return Result.fail(ErrorListEnum.TokenIsInvalid);
     }

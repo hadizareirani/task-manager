@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { User, UserSchema } from './schemas/user.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { PasswordResetSchema, ResetPassword } from './schemas';
+import { ResetPasswordSchema, ResetPassword } from './schemas';
 import {
   UserRepositoryImpl,
   ResetPasswordRepositoryImpl,
@@ -19,7 +19,7 @@ import { USER_REPOSITORY, RESET_PASSWORD_REPOSITORY } from './constants';
   imports: [
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
-      { name: ResetPassword.name, schema: PasswordResetSchema },
+      { name: ResetPassword.name, schema: ResetPasswordSchema },
     ]),
   ],
   controllers: [],

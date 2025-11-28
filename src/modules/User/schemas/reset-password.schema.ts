@@ -30,5 +30,5 @@ export class ResetPassword {
   updatedAt: Date;
 }
 
-export const PasswordResetSchema = SchemaFactory.createForClass(ResetPassword);
-PasswordResetSchema.set('collection', 'PasswordReset');
+export const ResetPasswordSchema = SchemaFactory.createForClass(ResetPassword);
+ResetPasswordSchema.set('collection', 'ResetPassword');
