@@ -8,6 +8,9 @@ import {
   PasswordReset,
   PasswordResetDocument,
 } from '../schemas/password-reset.schema';
+import { ResetPasswordMapper } from './mappers/reset-password.mapper';
+import { Result } from 'src/shared/core/result';
+import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 
 @Injectable()
 export class ResetPasswordRepositoryImpl implements ResetPasswordRepository {
@@ -16,11 +19,21 @@ export class ResetPasswordRepositoryImpl implements ResetPasswordRepository {
     private readonly passwordResetModel: Model<PasswordResetDocument>,
   ) {}
 
-  create(resetPassword: ResetPasswordEntity) {
-    return resetPassword as any;
+  async create(resetPassword: ResetPasswordEntity) {
+    const createResetPassword = new this.passwordResetModel(
+      ResetPasswordMapper.toPersistence(resetPassword),
+    );
+    const response = await createResetPassword.save();
+    return ResetPasswordMapper.toDomain(response);
   }
 
-  findByToken(token: string) {
-    return token as any;
+  async findByToken(
+    token: string,
+  ): Promise<Result<ResetPasswordEntity, ErrorListEnum>> {
+    const tokenDoc = await this.passwordResetModel.findOne({ token }).exec();
+    if (!tokenDoc) {
+      return Result.fail(ErrorListEnum.TokenIsInvalid);
+    }
+    return ResetPasswordMapper.toDomain(tokenDoc);
   }
 }
