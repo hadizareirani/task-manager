@@ -9,7 +9,7 @@ import {
 } from '../../domain';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 import { OperationResponse } from 'src/shared/core/operation-response';
-import { USER_REPOSITORY } from '../../constants/user-repository.token';
+import { USER_REPOSITORY } from '../../constants';
 
 @Injectable()
 export class CreateUserService {
