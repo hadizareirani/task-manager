@@ -31,4 +31,18 @@ export class ResetPasswordMapper {
       }),
     );
   }
+
+  static toPersistence(resetPassword: ResetPasswordEntity) {
+    return {
+      ...(resetPassword.id && { _id: resetPassword.id }),
+      userId: resetPassword.userId.toString(),
+      resetToken: resetPassword.resetToken,
+      username: resetPassword.username.value,
+      email: resetPassword.email.value,
+      expiresAt: resetPassword.expiresAt,
+      isUsed: resetPassword.isUsed,
+      createdAt: resetPassword.createdAt,
+      updatedAt: resetPassword.updatedAt,
+    };
+  }
 }
