@@ -1,10 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { SignUpUseCase } from '../../application/sign-up.use-case';
-import { LoginUseCase } from '../../application/login.use-case';
+import { SignUpUseCase } from '../../application/use-cases/sign-up.use-case';
+import { LoginUseCase } from '../../application/use-cases/login.use-case';
 import { SignUpDto } from '../dto/sign-up.dto';
 import { LoginDto } from '../dto/login.dto';
 import { ForgotPasswordDto } from '../dto/forgot-password.dto';
-import { ForgotPasswordUseCase } from '../../application/forgot-password.use-case';
+import { ForgotPasswordUseCase } from '../../application/use-cases/forgot-password.use-case';
 
 @Controller('/auth')
 export class AuthController {

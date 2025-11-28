@@ -1,11 +1,14 @@
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { SignUpUseCase } from './application/sign-up.use-case';
-import { AuthController } from './interfaces/controllers/auth.controller';
+
+import {
+  SignUpUseCase,
+  LoginUseCase,
+  ForgotPasswordUseCase,
+} from './application';
+import { AuthController } from './interfaces';
 import { UserModule } from '../User/user.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { LoginUseCase } from './application/login.use-case';
-import { ForgotPasswordUseCase } from './application/forgot-password.use-case';
 
 @Module({
   imports: [
