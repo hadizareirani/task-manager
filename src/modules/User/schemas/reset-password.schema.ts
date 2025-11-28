@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
-export type PasswordResetDocument = PasswordReset & Document<string>;
+export type ResetPasswordDocument = ResetPassword & Document<string>;
 
 @Schema()
-export class PasswordReset {
+export class ResetPassword {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   userId: Types.ObjectId;
 
@@ -30,5 +30,5 @@ export class PasswordReset {
   updatedAt: Date;
 }
 
-export const PasswordResetSchema = SchemaFactory.createForClass(PasswordReset);
+export const PasswordResetSchema = SchemaFactory.createForClass(ResetPassword);
 PasswordResetSchema.set('collection', 'PasswordReset');

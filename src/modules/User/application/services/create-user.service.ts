@@ -1,5 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Email, Name, Password, User, Username, UserRepository } from '../../domain';
+import {
+  Email,
+  Name,
+  Password,
+  User,
+  Username,
+  UserRepository,
+} from '../../domain';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 import { OperationResponse } from 'src/shared/core/operation-response';
 import { USER_REPOSITORY } from '../../constants/user-repository.token';

@@ -1,14 +1,14 @@
 import { Result } from 'src/shared/core/result';
+import { ResetPassword, ResetPasswordDocument } from '../../schemas';
 import {
-  PasswordReset,
-  PasswordResetDocument,
-} from '../../schemas/password-reset.schema';
-import { ResetPassword as ResetPasswordEntity } from '../../domain/entity/reset-password.entity';
+  ResetPassword as ResetPasswordEntity,
+  Email,
+  Username,
+} from '../../domain';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
-import { Email, Username } from '../../domain';
 
-type ResetPasswordToDomainMapperParams = PasswordReset &
-  Pick<PasswordResetDocument, '_id'>;
+type ResetPasswordToDomainMapperParams = ResetPassword &
+  Pick<ResetPasswordDocument, '_id'>;
 
 export class ResetPasswordMapper {
   static toDomain(

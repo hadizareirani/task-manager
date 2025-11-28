@@ -1,20 +1,26 @@
 import { Module } from '@nestjs/common';
 import { User, UserSchema } from './schemas/user.schema';
-import { UserRepositoryImpl } from './infrastructure/user.repository.impl';
+import { MongooseModule } from '@nestjs/mongoose';
+
+import { PasswordResetSchema, ResetPassword } from './schemas';
+import {
+  UserRepositoryImpl,
+  ResetPasswordRepositoryImpl,
+} from './infrastructure/';
 import {
   CompareUserEmailService,
   CreateUserService,
   CreateUserUseCase,
   FindUserByUsernameService,
 } from './application';
-import { USER_REPOSITORY } from './constants/user-repository.token';
-import { MongooseModule } from '@nestjs/mongoose';
-import { RESET_PASSWORD_REPOSITORY } from './constants/reset-password-repository.token';
-import { ResetPasswordRepositoryImpl } from './infrastructure/reset-password.repository.impl';
+import { USER_REPOSITORY, RESET_PASSWORD_REPOSITORY } from './constants';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([
+      { name: User.name, schema: UserSchema },
+      { name: ResetPassword.name, schema: PasswordResetSchema },
+    ]),
   ],
   controllers: [],
   providers: [

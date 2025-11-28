@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserService } from '../services/create-user.service';
+import { CreateUserService } from '../services';
 
 @Injectable()
 export class CreateUserUseCase {

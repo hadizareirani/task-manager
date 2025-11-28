@@ -1,9 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { Email, User as UserEntity, Username, UserRepository } from '../domain';
-import { User, UserDocument } from '../schemas/user.schema';
-import { UserMapper } from './mappers/user.mapper';
+
+import {
+  Email,
+  User as UserEntity,
+  Username,
+  UserRepository,
+} from '../../domain';
+import { User, UserDocument } from '../../schemas';
+import { UserMapper } from '../mappers';
 import { Result } from 'src/shared/core/result';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 

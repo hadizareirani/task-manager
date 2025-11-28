@@ -2,21 +2,21 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { ResetPasswordRepository } from '../domain/repository/reset-password.repository';
-import { ResetPassword as ResetPasswordEntity } from '../domain/entity/reset-password.entity';
 import {
-  PasswordReset,
-  PasswordResetDocument,
-} from '../schemas/password-reset.schema';
-import { ResetPasswordMapper } from './mappers/reset-password.mapper';
+  ResetPasswordRepository,
+  ResetPassword as ResetPasswordEntity,
+} from '../../domain';
+
+import { ResetPassword, ResetPasswordDocument } from '../../schemas';
+import { ResetPasswordMapper } from '../mappers';
 import { Result } from 'src/shared/core/result';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 
 @Injectable()
 export class ResetPasswordRepositoryImpl implements ResetPasswordRepository {
   constructor(
-    @InjectModel(PasswordReset.name)
-    private readonly passwordResetModel: Model<PasswordResetDocument>,
+    @InjectModel(ResetPassword.name)
+    private readonly passwordResetModel: Model<ResetPasswordDocument>,
   ) {}
 
   async create(resetPassword: ResetPasswordEntity) {
