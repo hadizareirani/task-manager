@@ -9,6 +9,8 @@ import {
 } from './application';
 import { USER_REPOSITORY } from './constants/user-repository.token';
 import { MongooseModule } from '@nestjs/mongoose';
+import { RESET_PASSWORD_REPOSITORY } from './constants/reset-password-repository.token';
+import { ResetPasswordRepositoryImpl } from './infrastructure/reset-password.repository.impl';
 
 @Module({
   imports: [
@@ -24,7 +26,15 @@ import { MongooseModule } from '@nestjs/mongoose';
       provide: USER_REPOSITORY,
       useClass: UserRepositoryImpl,
     },
+    {
+      provide: RESET_PASSWORD_REPOSITORY,
+      useClass: ResetPasswordRepositoryImpl,
+    },
   ],
-  exports: [CreateUserService, FindUserByUsernameService, CompareUserEmailService],
+  exports: [
+    CreateUserService,
+    FindUserByUsernameService,
+    CompareUserEmailService,
+  ],
 })
 export class UserModule {}
