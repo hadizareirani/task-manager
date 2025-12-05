@@ -24,8 +24,10 @@ export class CreateResetPasswordService {
   ): Promise<OperationResponse<ResetPassword, ErrorListEnum>> {
     const userValidToken =
       await this.resetPasswordRepository.findTokenByUserId(userId);
+
     if (userValidToken.isSuccess) {
       const existingToken = userValidToken.getValue();
+      console.log(existingToken);
       if (existingToken.expiresAt < new Date() || existingToken.isUsed) {
         return await this.generateToken(email, username, userId);
       } else {

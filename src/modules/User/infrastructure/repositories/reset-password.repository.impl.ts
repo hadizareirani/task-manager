@@ -30,7 +30,10 @@ export class ResetPasswordRepositoryImpl implements ResetPasswordRepository {
   async findByToken(
     token: string,
   ): Promise<Result<ResetPasswordEntity, ErrorListEnum>> {
-    const tokenDoc = await this.resetPasswordModel.findOne({ token }).exec();
+    const tokenDoc = await this.resetPasswordModel
+      .findOne({ token })
+      .sort({ createdAt: -1 })
+      .exec();
     if (!tokenDoc) {
       return Result.fail(ErrorListEnum.TokenIsInvalid);
     }
@@ -40,7 +43,10 @@ export class ResetPasswordRepositoryImpl implements ResetPasswordRepository {
   async findTokenByUserId(
     userId: string,
   ): Promise<Result<ResetPasswordEntity, ErrorListEnum>> {
-    const tokenDoc = await this.resetPasswordModel.findOne({ userId }).exec();
+    const tokenDoc = await this.resetPasswordModel
+      .findOne({ userId })
+      .sort({ createdAt: -1 })
+      .exec();
     if (!tokenDoc) {
       return Result.fail(ErrorListEnum.ItemNotFound);
     }
