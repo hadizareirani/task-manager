@@ -8,4 +8,7 @@ export enum ErrorListEnum {
   NameIsRequired,
   NameIsInvalid,
   TokenIsInvalid,
+  TokenExpired,
+  UserHasValidToken,
+  ItemNotFound,
 }

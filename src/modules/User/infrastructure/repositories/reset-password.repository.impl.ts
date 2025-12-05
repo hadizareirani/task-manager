@@ -36,4 +36,14 @@ export class ResetPasswordRepositoryImpl implements ResetPasswordRepository {
     }
     return ResetPasswordMapper.toDomain(tokenDoc);
   }
+
+  async findTokenByUserId(
+    userId: string,
+  ): Promise<Result<ResetPasswordEntity, ErrorListEnum>> {
+    const tokenDoc = await this.resetPasswordModel.findOne({ userId }).exec();
+    if (!tokenDoc) {
+      return Result.fail(ErrorListEnum.ItemNotFound);
+    }
+    return ResetPasswordMapper.toDomain(tokenDoc);
+  }
 }

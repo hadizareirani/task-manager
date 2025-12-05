@@ -8,4 +8,7 @@ export interface ResetPasswordRepository {
   ): Promise<Result<ResetPassword, ErrorListEnum>>;
 
   findByToken(token: string): Promise<Result<ResetPassword, ErrorListEnum>>;
+  findTokenByUserId(
+    userId: string,
+  ): Promise<Result<ResetPassword, ErrorListEnum>>;
 }

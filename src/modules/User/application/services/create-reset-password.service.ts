@@ -22,9 +22,24 @@ export class CreateResetPasswordService {
     username: Username,
     userId: string,
   ): Promise<OperationResponse<ResetPassword, ErrorListEnum>> {
-    // Todo:I must check if there is an existing valid reset token for the user before creating a new one.
-    // Find valid reset password token logic can be added here.
+    const userValidToken =
+      await this.resetPasswordRepository.findTokenByUserId(userId);
+    if (userValidToken.isSuccess) {
+      const existingToken = userValidToken.getValue();
+      if (existingToken.expiresAt < new Date() || existingToken.isUsed) {
+        return await this.generateToken(email, username, userId);
+      } else {
+        return OperationResponse.fail(ErrorListEnum.UserHasValidToken);
+      }
+    }
+    return await this.generateToken(email, username, userId);
+  }
 
+  private async generateToken(
+    email: Email,
+    username: Username,
+    userId: string,
+  ): Promise<OperationResponse<ResetPassword, ErrorListEnum>> {
     const token = randomBytes(32).toString('hex');
     const expiresAt = new Date(Date.now() + 30 * 60 * 1000);
     const resetPasswordEntity = ResetPassword.create({
