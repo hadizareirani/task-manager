@@ -13,6 +13,7 @@ import {
   CreateUserService,
   CreateUserUseCase,
   FindUserByUsernameService,
+  ResetPasswordValidationService,
 } from './application';
 import { USER_REPOSITORY, RESET_PASSWORD_REPOSITORY } from './constants';
 
@@ -25,10 +26,13 @@ import { USER_REPOSITORY, RESET_PASSWORD_REPOSITORY } from './constants';
   ],
   controllers: [],
   providers: [
+    // services
     CreateUserService,
     FindUserByUsernameService,
     CompareUserEmailService,
     CreateResetPasswordService,
+    ResetPasswordValidationService,
+    // use-cases
     CreateUserUseCase,
     {
       provide: USER_REPOSITORY,
@@ -44,6 +48,7 @@ import { USER_REPOSITORY, RESET_PASSWORD_REPOSITORY } from './constants';
     FindUserByUsernameService,
     CompareUserEmailService,
     CreateResetPasswordService,
+    ResetPasswordValidationService,
   ],
 })
 export class UserModule {}
