@@ -6,10 +6,10 @@ import {
   User,
   Username,
   UserRepository,
-} from '../../domain';
+} from '../../../domain';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
 import { OperationResponse } from 'src/shared/core/operation-response';
-import { USER_REPOSITORY } from '../../constants';
+import { USER_REPOSITORY } from '../../../constants';
 
 @Injectable()
 export class CreateUserService {

@@ -5,10 +5,10 @@ import {
   ResetPassword,
   ResetPasswordRepository,
   Username,
-} from '../../domain';
+} from '../../../domain';
 import { OperationResponse } from 'src/shared/core/operation-response';
 import { ErrorListEnum } from 'src/shared/enums/error-list.enum';
-import { RESET_PASSWORD_REPOSITORY } from '../../constants';
+import { RESET_PASSWORD_REPOSITORY } from '../../../constants';
 
 @Injectable()
 export class CreateResetPasswordService {
