@@ -6,6 +6,7 @@ import {
   SignUpUseCase,
   LoginUseCase,
   ForgotPasswordUseCase,
+  ForgotPasswordValidationUseCase,
 } from './application';
 import { AuthController } from './interfaces';
 import { UserModule } from '../User/user.module';
@@ -25,6 +26,11 @@ import { UserModule } from '../User/user.module';
     }),
   ],
   controllers: [AuthController],
-  providers: [SignUpUseCase, LoginUseCase, ForgotPasswordUseCase],
+  providers: [
+    SignUpUseCase,
+    LoginUseCase,
+    ForgotPasswordUseCase,
+    ForgotPasswordValidationUseCase,
+  ],
 })
 export class AuthModule {}
